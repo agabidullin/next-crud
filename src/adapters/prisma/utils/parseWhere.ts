@@ -29,6 +29,7 @@ const operatorsAssociation: {
   $lte: 'lte',
   $notin: 'notIn',
   $starts: 'startsWith',
+  $mode: 'mode',
 }
 
 const isDateString = (value: string) =>

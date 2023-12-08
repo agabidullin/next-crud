@@ -19,6 +19,7 @@ export type TPrismaWhereOperator =
   | 'contains'
   | 'startsWith'
   | 'endsWith'
+  | 'mode'
 
 export type TPrismaOrderByOperator = 'asc' | 'desc'
 

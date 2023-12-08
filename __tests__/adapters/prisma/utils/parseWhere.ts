@@ -291,4 +291,35 @@ describe('Prisma parse where', () => {
       }
     )
   })
+
+  it('should handle mode key', () => {
+    const baseQuery: TWhereField = {
+      $and: {
+        fullNumber: {
+          $cont: 'foo',
+          $mode: 'insensitive',
+        },
+        someNumber: {
+          $gte: 10,
+          $lte: 20,
+        },
+      },
+    }
+
+    expect(parsePrismaWhere(baseQuery, [])).toEqual<TPrismaWhereField>(
+      // @ts-ignore
+      {
+        AND: {
+          fullNumber: {
+            contains: 'foo',
+            mode: 'insensitive',
+          },
+          someNumber: {
+            gte: 10,
+            lte: 20,
+          },
+        },
+      }
+    )
+  })
 })

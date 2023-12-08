@@ -88,6 +88,7 @@ export type TWhereOperator =
   | '$starts'
   | '$ends'
   | '$isnull'
+  | '$mode'
 
 export type TSearchCondition = string | boolean | number | Date | null
 

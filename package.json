@@ -1,6 +1,6 @@
 {
   "name": "@agabidullin/next-crud",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Next.js CRUD routes generation helper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
