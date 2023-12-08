@@ -12,6 +12,7 @@ import {
   TPrismaWhereOperator,
   TPrismaWhereField,
   TPrismaRelationFitler,
+  TPrismaFieldFilterOperator,
 } from '../types'
 
 const operatorsAssociation: {
@@ -56,14 +57,15 @@ const isRelation = (key: string, manyRelations: string[]): boolean => {
 }
 
 const parseSimpleField = (value: TCondition) => {
-  const operator = Object.keys(value)[0]
-  const prismaOperator: TPrismaWhereOperator = operatorsAssociation[operator]
+  const parsed: TPrismaFieldFilterOperator = {}
+  Object.keys(value).forEach((operator) => {
+    const prismaOperator: TPrismaWhereOperator = operatorsAssociation[operator]
 
-  if (prismaOperator) {
-    return {
-      [prismaOperator]: value[operator],
+    if (prismaOperator) {
+      parsed[prismaOperator] = value[operator] as TSearchCondition
     }
-  }
+  })
+  return parsed
 }
 
 const parseObjectCombination = (

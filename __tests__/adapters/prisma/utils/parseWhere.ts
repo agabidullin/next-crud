@@ -262,4 +262,33 @@ describe('Prisma parse where', () => {
       },
     })
   })
+
+  it('should handle two and more keys in object', () => {
+    const baseQuery: TWhereField = {
+      $and: {
+        fullNumber: {
+          $cont: 'foo',
+        },
+        someNumber: {
+          $gte: 10,
+          $lte: 20,
+        },
+      },
+    }
+
+    expect(parsePrismaWhere(baseQuery, [])).toEqual<TPrismaWhereField>(
+      // @ts-ignore
+      {
+        AND: {
+          fullNumber: {
+            contains: 'foo',
+          },
+          someNumber: {
+            gte: 10,
+            lte: 20,
+          },
+        },
+      }
+    )
+  })
 })

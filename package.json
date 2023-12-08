@@ -1,10 +1,10 @@
 {
-  "name": "@premieroctet/next-crud",
+  "name": "@agabidullin/next-crud",
   "version": "3.0.0",
   "description": "Next.js CRUD routes generation helper",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "repository": "https://github.com/premieroctet/next-crud.git",
+  "repository": "https://github.com/agabidullin/next-crud.git",
   "author": "Hugo FOYART <hfoyart@premieroctet.com>",
   "license": "MIT",
   "private": false,
