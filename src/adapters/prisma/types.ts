@@ -32,11 +32,12 @@ export type TPrismaFieldFilter = {
     | TSearchCondition
     | TPrismaFieldFilterOperator
     | TPrismaRelationFitler
+    | TPrismaFieldFilter[]
 }
 
 export type TPrismaWhereField = TPrismaFieldFilter & {
   AND?: TPrismaFieldFilter
-  OR?: TPrismaFieldFilter
+  OR?: TPrismaFieldFilter | TPrismaFieldFilter[]
   NOT?: TPrismaFieldFilter
 }
 

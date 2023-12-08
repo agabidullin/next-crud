@@ -322,4 +322,32 @@ describe('Prisma parse where', () => {
       }
     )
   })
+
+  it('should combine and/or', () => {
+    const baseQuery: TWhereField = {
+      isLegalEntity: false,
+      $or: [
+        { name: { $cont: 'gtn', $mode: 'insensitive' } },
+        { surname: { $cont: 'gtn', $mode: 'insensitive' } },
+        { patronymic: { $cont: 'gtn', $mode: 'insensitive' } },
+      ],
+    }
+
+    expect(parsePrismaWhere(baseQuery, [])).toEqual<TPrismaWhereField>(
+      // @ts-ignore
+      {
+        isLegalEntity: false,
+        OR: [
+          { name: { contains: 'gtn', mode: 'insensitive' } },
+          { surname: { contains: 'gtn', mode: 'insensitive' } },
+          {
+            patronymic: {
+              contains: 'gtn',
+              mode: 'insensitive',
+            },
+          },
+        ],
+      }
+    )
+  })
 })

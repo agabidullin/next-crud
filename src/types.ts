@@ -97,7 +97,7 @@ export type TWhereCondition = {
 }
 
 export type TCondition = {
-  [key: string]: TSearchCondition | TWhereCondition | TCondition
+  [key: string]: TSearchCondition | TWhereCondition | TCondition | TCondition[]
 }
 
 export type TWhereField = TCondition & {

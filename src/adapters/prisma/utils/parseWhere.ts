@@ -95,7 +95,14 @@ const parseObjectCombination = (
 }
 
 const basicParse = (
-  value: string | number | boolean | TCondition | Date | TWhereCondition,
+  value:
+    | string
+    | number
+    | boolean
+    | TCondition
+    | Date
+    | TWhereCondition
+    | TCondition[],
   key: string,
   parsed: TPrismaWhereField,
   manyRelations: string[]
@@ -105,7 +112,9 @@ const basicParse = (
   } else {
     switch (key) {
       case '$or': {
-        if (isObject(value)) {
+        if (Array.isArray(value)) {
+          parsed.OR = value.map((v) => parseObjectCombination(v, manyRelations))
+        } else if (isObject(value)) {
           parsed.OR = parseObjectCombination(value as TCondition, manyRelations)
         }
         break
@@ -137,7 +146,14 @@ const basicParse = (
 }
 
 const parseRelation = (
-  value: string | number | boolean | Date | TCondition | TWhereCondition,
+  value:
+    | string
+    | number
+    | boolean
+    | Date
+    | TCondition
+    | TWhereCondition
+    | TCondition[],
   key: string,
   parsed: TPrismaWhereField,
   manyRelations: string[]
