@@ -7,7 +7,9 @@ import {
   IParsedQueryParams,
   TPaginationOptions,
   TDefaultExposeStrategy,
+  TInternalRequest,
 } from './types'
+import { NextApiRequest } from 'next'
 
 interface GetRouteTypeParams {
   method: string
@@ -28,7 +30,7 @@ export const getRouteType = ({
   resourceName,
 }: GetRouteTypeParams): GetRouteType | null => {
   // Exclude the query params from the path
-  const realPath = url.split('?')[0]
+  const realPath = (url.startsWith("http")) ? new URL(url).pathname : url.split('?')[0]
 
   if (!realPath.includes(`/${resourceName}`)) {
     throw new Error(
@@ -224,4 +226,37 @@ export const getAccessibleRoutes = (
   }
 
   return accessibleRoutes
+}
+
+export const toRequest = async (
+  req: NextApiRequest | Request
+): Promise<TInternalRequest> => {
+  if (req instanceof Request) {
+    const body = req.body ? await req.json() : undefined
+    const headers = new Headers(req.headers)
+    const request: TInternalRequest = {
+      method: req.method,
+      url: req.url,
+      body,
+      headers,
+    }
+    return request
+  } else {
+    const headers = new Headers()
+    for (const key in req.headers) {
+      if (req.headers[key]) {
+        headers.append(key, req.headers[key] as string)
+      }
+    }
+    const request: TInternalRequest = {
+      method: req.method,
+      url: req.url,
+      body:
+        req.method === 'POST' || req.method === 'PUT' || req.method === 'PATCH'
+          ? req.body
+          : undefined,
+      headers,
+    }
+    return request
+  }
 }
